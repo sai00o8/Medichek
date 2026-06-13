@@ -4,6 +4,7 @@ from rich.table import Table
 from ai_analyzer import analyze_symptoms
 from scorer import calculate_score
 from database import init_db, save_session, get_history
+from report_gen import generate_pdf
 
 console = Console()
 
@@ -77,6 +78,17 @@ def main():
     # Print severity score
     console.print(f"\n[bold]Severity Score:[/bold] {score_data['score']}/100")
     console.print(f"[bold]Assessment:[/bold] {score_data['severity_level']}")
+
+# Ask user if they want a PDF
+    console.print("\n[bold]Would you like to save this as a PDF report? (yes / no)[/bold]")
+    pdf_choice = input("> ").strip().lower()
+    
+    if pdf_choice in ["yes", "y"]:
+        console.print("\n[yellow]📄 Generating PDF report...[/yellow]")
+        pdf_file = generate_pdf(data, result, score_data)
+        console.print(f"[bold green]✅ Report saved as: {pdf_file}[/bold green]")
+    else:
+        console.print("\n[yellow]📄 Report not saved.[/yellow]")
     
     # Print urgent flags
     if score_data["flags"]:
