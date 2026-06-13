@@ -24,6 +24,56 @@ def init_db():
     conn.commit()
     conn.close()
 
+def delete_session(session_id):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    cursor.execute('DELETE FROM sessions WHERE id = ?', (session_id,))
+    affected = cursor.rowcount
+    
+    conn.commit()
+    conn.close()
+    
+    return affected > 0
+
+def delete_all_sessions():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    cursor.execute('DELETE FROM sessions')
+    
+    conn.commit()
+    conn.close()
+
+def get_session_by_id(session_id):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        SELECT id, date, symptoms, duration, severity, ai_response, score, assessment
+        FROM sessions 
+        WHERE id = ?
+    ''', (session_id,))
+    
+    row = cursor.fetchone()
+    conn.close()
+    return row
+
+def search_sessions(keyword):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        SELECT id, date, symptoms, score, assessment 
+        FROM sessions 
+        WHERE symptoms LIKE ?
+        ORDER BY id DESC
+    ''', (f'%{keyword}%',))
+    
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
 def save_session(data, ai_response, score_data):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
