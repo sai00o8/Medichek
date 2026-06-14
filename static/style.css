@@ -160,8 +160,8 @@ textarea:focus, input[type="text"]:focus {
     border-radius: 10px;
     padding: 16px;
     white-space: pre-wrap;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 1.15rem;
+    line-height: 1.8;
     margin: 16px 0;
 }
 
@@ -185,12 +185,13 @@ textarea:focus, input[type="text"]:focus {
 
 #score-text {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 #assessment-text {
     color: #7f8c8d;
     margin-top: 4px;
+    font-size: 1.1rem;
 }
 
 #flags-section {
