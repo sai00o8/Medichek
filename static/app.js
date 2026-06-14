@@ -1,3 +1,93 @@
+let isRegisterMode = false;
+
+function toggleAuthMode() {
+    isRegisterMode = !isRegisterMode;
+    
+    document.getElementById("register-fields").classList.toggle("hidden", !isRegisterMode);
+    document.getElementById("auth-title").textContent = isRegisterMode ? "Register" : "Login";
+    document.getElementById("auth-submit-btn").textContent = isRegisterMode ? "Register" : "Login";
+    document.getElementById("auth-toggle-text").textContent = isRegisterMode 
+        ? "Already have an account? Login" 
+        : "Don't have an account? Register";
+    document.getElementById("auth-error").classList.add("hidden");
+}
+
+async function handleAuth() {
+    const username = document.getElementById("auth-username").value.trim();
+    const password = document.getElementById("auth-password").value.trim();
+    const errorEl = document.getElementById("auth-error");
+    
+    if (!username || !password) {
+        errorEl.textContent = "Please fill in all fields";
+        errorEl.classList.remove("hidden");
+        return;
+    }
+    
+    let endpoint = "/login";
+    let body = { username, password };
+    
+    if (isRegisterMode) {
+        const email = document.getElementById("reg-email").value.trim();
+        if (!email) {
+            errorEl.textContent = "Please enter an email";
+            errorEl.classList.remove("hidden");
+            return;
+        }
+        endpoint = "/register";
+        body = { username, email, password };
+    }
+    
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+        
+        const data = await response.json();
+        
+        if (data.error) {
+            errorEl.textContent = data.error;
+            errorEl.classList.remove("hidden");
+            return;
+        }
+        
+        // Success - hide modal and show app
+        document.getElementById("auth-modal").classList.add("hidden");
+        document.getElementById("user-bar").classList.remove("hidden");
+        document.getElementById("welcome-text").textContent = `👋 Welcome, ${data.username}`;
+        
+    } catch (err) {
+        errorEl.textContent = "Connection error. Please try again.";
+        errorEl.classList.remove("hidden");
+    }
+}
+
+async function logout() {
+    await fetch("/logout", { method: "POST" });
+    document.getElementById("user-bar").classList.add("hidden");
+    document.getElementById("auth-modal").classList.remove("hidden");
+    document.getElementById("auth-username").value = "";
+    document.getElementById("auth-password").value = "";
+}
+
+async function checkLoginStatus() {
+    const response = await fetch("/check-session");
+    const data = await response.json();
+    
+    if (data.logged_in) {
+        document.getElementById("auth-modal").classList.add("hidden");
+        document.getElementById("user-bar").classList.remove("hidden");
+        document.getElementById("welcome-text").textContent = `👋 Welcome, ${data.username}`;
+    } else {
+        document.getElementById("auth-modal").classList.remove("hidden");
+        document.getElementById("user-bar").classList.add("hidden");
+    }
+}
+
+// Run on page load
+checkLoginStatus();
+
 let selectedSeverity = "";
 let lastResult = null;
 

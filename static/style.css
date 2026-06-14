@@ -295,3 +295,70 @@ textarea:focus, input[type="text"]:focus {
     font-style: italic;
     letter-spacing: 1px;
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+    color: #2980b9;
+    text-align: center;
+}
+
+.auth-toggle {
+    text-align: center;
+    margin-top: 16px;
+    color: #2980b9;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.auth-toggle:hover {
+    text-decoration: underline;
+}
+
+.auth-error {
+    color: #e74c3c;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.user-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
