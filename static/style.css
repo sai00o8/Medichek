@@ -292,7 +292,7 @@ textarea:focus, input[type="text"]:focus {
     font-size: 0.85rem;
     color: #bdc3c7;
     margin-top: 4px;
-    font-style: italic;
+    font-weight: bold;
     letter-spacing: 1px;
 }
 
