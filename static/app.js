@@ -103,8 +103,10 @@ function showPage(page) {
 
 function setSeverity(level) {
     selectedSeverity = level;
-    document.querySelectorAll(".severity-btn").forEach(btn => btn.classList.remove("selected"));
-    document.getElementById(`sev-${level}`).classList.add("selected");
+    document.querySelectorAll(".severity-btn").forEach(btn => {
+        btn.classList.remove("selected", "mild", "moderate", "severe");
+    });
+    document.getElementById(`sev-${level}`).classList.add("selected", level);
 }
 
 async function analyze() {
