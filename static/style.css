@@ -103,11 +103,22 @@ textarea:focus, input[type="text"]:focus {
     transition: all 0.2s;
 }
 
-.severity-btn.selected {
-    border-color: #2980b9;
-    background: #ebf5fb;
-    color: #2980b9;
-    font-weight: 600;
+.severity-btn.selected.mild {
+    border-color: #27ae60;
+    background: #eafaf1;
+    color: #27ae60;
+}
+
+.severity-btn.selected.moderate {
+    border-color: #f39c12;
+    background: #fef5e7;
+    color: #f39c12;
+}
+
+.severity-btn.selected.severe {
+    border-color: #e74c3c;
+    background: #fdecea;
+    color: #e74c3c;
 }
 
 .analyze-btn {
