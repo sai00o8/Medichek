@@ -372,3 +372,21 @@ textarea:focus, input[type="text"]:focus {
     cursor: pointer;
     font-size: 0.85rem;
 }
+
+.report-header {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #2980b9;
+    margin: 20px 0 10px 0;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #ebf5fb;
+}
+
+.report-header:first-child {
+    margin-top: 0;
+}
+
+.condition-name {
+    color: #2c3e50;
+    font-size: 1.15rem;
+}

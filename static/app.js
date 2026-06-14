@@ -147,7 +147,7 @@ async function analyze() {
             casualDiv.classList.add("hidden");
             diagnosisDiv.classList.remove("hidden");
 
-            document.getElementById("ai-response").textContent = data.ai_response;
+            document.getElementById("ai-response").innerHTML = formatReport(data.ai_response);
             document.getElementById("score-text").textContent = `Severity Score: ${data.score}/100`;
             document.getElementById("assessment-text").textContent = data.assessment;
 
@@ -256,7 +256,7 @@ async function viewFullReport(id) {
     diagnosisDiv.classList.remove("hidden");
     casualDiv.classList.add("hidden");
 
-    document.getElementById("ai-response").textContent = data.ai_response;
+    document.getElementById("ai-response").innerHTML = formatReport(data.ai_response);
     document.getElementById("score-text").textContent = `Severity Score: ${data.score}/100`;
     document.getElementById("assessment-text").textContent = data.assessment;
 
@@ -281,4 +281,26 @@ async function deleteAll() {
     if (!confirm("Delete ALL history? This cannot be undone.")) return;
     await fetch("/history/delete-all", { method: "DELETE" });
     loadHistory();
+}
+function formatReport(text) {
+    const headers = [
+        "POSSIBLE CONDITIONS:",
+        "SEVERITY LEVEL:",
+        "RECOMMENDATION:",
+        "DISCLAIMER:"
+    ];
+    
+    let formatted = text;
+    
+    headers.forEach(header => {
+        formatted = formatted.replace(header, `<div class="report-header">${header}</div>`);
+    });
+    
+    // Convert line breaks to HTML breaks
+    formatted = formatted.replace(/\n/g, "<br>");
+    
+    // Bold the condition names (text before the first " - ")
+    formatted = formatted.replace(/(\d\. )(.*?)( - )/g, '$1<strong class="condition-name">$2</strong>$3');
+    
+    return formatted;
 }
