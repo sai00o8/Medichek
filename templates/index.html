@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCheck</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🏥 MediCheck</h1>
+            <p>AI Powered Medical Symptom Checker</p>
+            <p class="watermark">by Sai</p>
+        </div>
+
+        <!-- NAVIGATION -->
+        <div class="nav">
+            <button onclick="showPage('checker')" class="nav-btn active" id="nav-checker">Check Symptoms</button>
+            <button onclick="showPage('history')" class="nav-btn" id="nav-history">History</button>
+        </div>
+
+        <!-- SYMPTOM CHECKER PAGE -->
+        <div id="page-checker">
+            <div class="card">
+                <h2>How are you feeling?</h2>
+
+                <div class="form-group">
+                    <label>What symptoms are you experiencing?</label>
+                    <textarea id="symptoms" placeholder="e.g. headache, fever, sore throat..." rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>How long have you had these symptoms?</label>
+                    <input type="text" id="duration" placeholder="e.g. 2 days, 1 week">
+                </div>
+
+                <div class="form-group">
+                    <label>Rate your discomfort</label>
+                    <div class="severity-buttons">
+                        <button onclick="setSeverity('mild')" class="severity-btn" id="sev-mild">😊 Mild</button>
+                        <button onclick="setSeverity('moderate')" class="severity-btn" id="sev-moderate">😟 Moderate</button>
+                        <button onclick="setSeverity('severe')" class="severity-btn" id="sev-severe">😰 Severe</button>
+                    </div>
+                </div>
+
+                <button onclick="analyze()" class="analyze-btn" id="analyze-btn">
+                    🔍 Analyze Symptoms
+                </button>
+            </div>
+
+            <!-- RESULT -->
+            <div id="result-card" class="card result-card hidden">
+                <div id="casual-message" class="hidden">
+                    <p id="casual-text"></p>
+                </div>
+                <div id="diagnosis" class="hidden">
+                    <h2>📋 Diagnosis Report</h2>
+                    <div id="ai-response"></div>
+                    <div class="score-section">
+                        <div id="score-bar-container">
+                            <div id="score-bar"></div>
+                        </div>
+                        <p id="score-text"></p>
+                        <p id="assessment-text"></p>
+                    </div>
+                    <div id="flags-section"></div>
+                    <button onclick="exportPDF()" class="pdf-btn">📄 Export as PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTORY PAGE -->
+        <div id="page-history" class="hidden">
+            <div class="card">
+                <h2>📜 Session History</h2>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search by symptom...">
+                    <button onclick="searchHistory()">🔍</button>
+                </div>
+                <button onclick="loadHistory()" class="load-btn">Load History</button>
+                <button onclick="deleteAll()" class="delete-all-btn">🗑️ Delete All</button>
+                <div id="history-list"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/static/app.js"></script>
+
+</body>
+</html>
